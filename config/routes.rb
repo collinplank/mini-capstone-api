@@ -12,5 +12,5 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index
 
-  get "/apple", controller: "mini_capstone_api", action: "apple"
+  get "/all_products", controller: "products", action: "all_products"
 end
