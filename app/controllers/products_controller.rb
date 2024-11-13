@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   def index
-    @products = Product.all.order(:id)
+    @products = Product.all
     render :index
   end
 
@@ -14,8 +14,10 @@ class ProductsController < ApplicationController
       name: params[:name],
       price: params[:price],
       description: params[:description],
+      supplier_id: params[:supplier_id],
     )
     if @product.valid?
+      Image.create(product_id: @product.id, url: params[:image_url])
       render :show
     else
       render json: { errors: @product.errors.full_messages }, status: 422
@@ -25,9 +27,9 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find_by(id: params[:id])
     @product.update(
-      name: params[:name],
-      price: params[:price],
-      description: params[:description],
+      name: params[:name] || @product.name,
+      price: params[:price] || @product.price,
+      description: params[:description] || @product.description,
     )
     if @product.valid?
       render :show

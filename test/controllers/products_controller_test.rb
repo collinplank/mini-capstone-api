@@ -9,9 +9,17 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     assert_equal Product.count, data.length
   end
 
+  test "show" do
+    get "/products/#{Product.first.id}.json"
+    assert_response 200
+
+    data = JSON.parse(response.body)
+    assert_equal ["id", "name", "price", "tax", "total", "supplier", "is_discounted?", "images", "description", "created_at", "updated_at"], data.keys
+  end
+
   test "create" do
     assert_difference "Product.count", 1 do
-      post "/products.json", params: { price: 1, name: "test product", description: "test description" }
+      post "/products.json", params: { price: 1, name: "test product", description: "test description", image_url: "image.jpg" }
       data = JSON.parse(response.body)
       assert_response 200
       refute_nil data["id"]
@@ -19,29 +27,22 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       assert_equal "1.0", data["price"]
       assert_equal "test description", data["description"]
     end
+
     assert_difference "Product.count", 0 do
       post "/products.json", params: { price: -10 }
       assert_response 422
     end
   end
 
-  test "show" do
-    get "/products/#{Product.first.id}.json"
-    assert_response 200
-
-    data = JSON.parse(response.body)
-    assert_equal ["id", "name", "price", "description", "supplier_id"], data.keys
-  end
-
   test "update" do
     product = Product.first
     patch "/products/#{product.id}.json", params: { name: "Updated name" }
-    assert_response 422
-
+    assert_response 200
     data = JSON.parse(response.body)
     assert_equal "Updated name", data["name"]
     assert_equal product.price.to_s, data["price"]
     assert_equal product.description, data["description"]
+
     patch "/products/#{product.id}.json", params: { price: -10 }
     assert_response 422
   end
