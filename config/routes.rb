@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   # root "posts#index
 
   post "/users" => "users#create"
+  post "/sessions" => "sessions#create"
 
   get "/products" => "products#index"
   post "/products" => "products#create"
