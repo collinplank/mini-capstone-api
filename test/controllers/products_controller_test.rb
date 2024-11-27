@@ -1,6 +1,11 @@
 require "test_helper"
 
 class ProductsControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    User.create(name: "Admin", email: "admin@example.com", password: "password", admin: true)
+    post "/sessions.json", params: { email: "admin@example.com", password: "password" }
+  end
+
   test "index" do
     get "/products.json"
     assert_response 200
@@ -21,7 +26,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     assert_difference "Product.count", 1 do
       post "/products.json", params: { price: 1, name: "test product", description: "test description", image_url: "image.jpg" }
       data = JSON.parse(response.body)
-      assert_response 222
+      assert_response 422
       refute_nil data["id"]
       assert_equal "test product", data["name"]
       assert_equal "1.0", data["price"]
