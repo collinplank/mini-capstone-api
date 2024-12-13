@@ -8,6 +8,9 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+Supplier.create(name: "Best Buy", email: "suppliersupport@bestbuy.com", phone_number: "888-237-8289")
+Supplier.create(name: "Target", email: "supplierservices@target.com", phone_number: "800-440-0680")
+
 Product.create(
   supplier_id: 1,
   name: "Apple iPhone 16 Pro",
@@ -42,9 +45,6 @@ Product.create(
   price: 1299.99,
   description: "The new iPad Pro with the M4 chip features a stunning 12.9-inch Liquid Retina XDR display, Thunderbolt connectivity, and support for the Apple Pencil (2nd gen). Perfect for creative professionals, offering unparalleled performance and productivity.",
 )
-
-Supplier.create(name: "Best Buy", email: "suppliersupport@bestbuy.com", phone_number: "888-237-8289")
-Supplier.create(name: "Target", email: "supplierservices@target.com", phone_number: "800-440-0680")
 
 # iPhone 16 Pro
 Image.create(url: "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-pro-model-unselect-gallery-2-202409_GEO_US?wid=5120&hei=2880&fmt=webp&qlt=70&.v=aWs5czA5aDFXU0FlMGFGRlpYRXk2UWFRQXQ2R0JQTk5udUZxTkR3ZVlpSlo4cUtOVXZ0VkpGRlBQT0VQc1Qrd0lYUWYrQkRLNitCbE9QRVRqNHErMkE3b3pFWnhZZ2g0M0pRR0pEdHVSRUduT0czaHArUlZLcEtOcW5GMm05cGpjZEdRU1pKUzFhYUR2UXFULzFGNGpB&traceId=1", product_id: 1)
